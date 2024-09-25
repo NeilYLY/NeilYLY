@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <!meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!link rel="stylesheet" href="aa.css">
+    <link href="https://vjs.zencdn.net/7.21.1/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.21.1/video.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>觀賞魚照顧輔助系統</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          background-color: #f2f2f2;
+        }
+
+        #camera-view {
+          width: 80vw;
+          max-width: 800px;
+          height: auto;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          overflow: hidden;
+          margin-bottom: 20px;
+        }
+
+        video {
+          width: 100%;
+          height: auto;
+        }
+
+        .controls {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
+
+        .controls button {
+          background-color: #007bff;
+          border: none;
+          color: white;
+          padding: 10px 20px;
+          margin: 0 5px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .controls button:hover {
+          background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function sendCommand(command) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "proc.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send("command=" + command);
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="line">
+            <h1><a href="index1.html">觀賞魚照顧輔助系統</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">最新消息</a></li>
+                <li><a href="#">關於我們</a></li>
+                <li><a href="reg.html">註冊</a></li>
+                <li><a href="login.html">登入</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container-fluid bg-primary pt-3">
+        <div class="row">
+            <div id="camera-view">
+                <video  id="video" class="video-js vjs-big-play-centered " controls preload="auto" autoplay muted data-setup="{}" >
+                        <source src="https://120.114.140.212/hls/stream.m3u8" type="application/vnd.apple.mpegurl"/>
+                </video>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="sendCommand('up')">Up</button>
+            <button onclick="sendCommand('down')">Down</button>
+            <button onclick="sendCommand('left')">Left</button>
+            <button onclick="sendCommand('right')">Right</button>
+            <button onclick="sendCommand('stop')">Stop</button>
+        </div>
+    </div>
+</body>
+</html>

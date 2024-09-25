@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-hant-tw">
+<head>
+<meta charset="utf-8">
+<title>觀賞魚照顧輔助系統</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; /* Ensure the header is above other content */
+        background-color: rgb(67, 70, 69);
+        height: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+	header .line h1 {
+  	color: rgb(255, 255, 255);
+  	margin-left: 50px; /* Adjust the margin as needed */
+  	line-height: 80px;
+	}
+
+    header h1 {
+        color: white; /* Set title color to white */
+    }
+    nav ul {
+        list-style-type: none; /* Remove bullet points */
+        margin: 0;
+        padding: 0;
+        text-align: right;
+    }
+    nav li {
+        display: inline-block;
+        margin-right: 20px; /* Adjust margin between nav items */
+    }
+    nav a {
+        color: white;
+        text-decoration: none;
+    }
+    nav a:hover {
+        color: black;
+        background-color: #ddd;
+    }
+    form {
+        max-width: 400px;
+        margin: 100px auto 20px; /* Adjust top margin as needed */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    input[type="text"],
+    input[type="password"] {
+        padding: 8px;
+        margin-bottom: 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    #namemsg,
+    #pwd1Span,
+    #tishi {
+        color: red;
+    }
+    #tishi {
+        font-size: 14px;
+    }
+</style>
+<script>
+function go() {
+    var str = document.getElementById("name").value;
+    if (str.length < 2 || str.length > 15) {
+        document.getElementById("namemsg").innerHTML = "! 帳號長度太長或太短，不合理";
+    } else {
+        document.getElementById("namemsg").innerHTML = "";
+    }
+}
+
+function checkpassword() {
+    var text = document.getElementById("pwd1").value;
+    var re = /^(?=.*[a-z])(?=.*\d)[^]{8,16}$/;
+    var result = re.test(text);
+    if (!result) {
+        document.getElementById("pwd1Span").innerHTML = "密碼必須包含數字、字母，且不少於8位";
+        return false;
+    } else {
+        document.getElementById("pwd1Span").innerHTML = "";
+        return true;
+    }
+}
+
+function checkpassword1() {
+    var password = document.getElementById("pwd1").value;
+    var repassword = document.getElementById("pwd2").value;
+    if (password === repassword) {
+        document.getElementById("tishi").innerHTML = "<font color='green'>兩次密碼一致</font>";
+        document.getElementById("submit").disabled = false;
+    } else {
+        document.getElementById("tishi").innerHTML = "<font color='red'>兩次密碼不一致!</font>";
+        document.getElementById("submit").disabled = true;
+    }
+}
+</script>
+</head>
+<body>
+<header>
+    <div class="line">
+        <h1>觀賞魚照顧輔助系統</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#">最新消息</a></li>
+            <li><a href="#">關於我們</a></li>
+            <li><a href="reg.html">註冊</a></li>
+            <li><a href="login.html">登入</a></li>
+        </ul>
+    </nav>
+</header>
+
+<h3></h3>
+<form method="post" action="reg.php">
+    <label for="name">帳號:</label>
+    <input type="text" name="name" id="name" onchange="go()" size="10">
+    <span id="namemsg"></span><br>
+    
+    <label for="pwd1">設定密碼:</label>
+    <input type="password" name="pwd1" id="pwd1" onkeyup="checkpassword()" size="10">
+    <p><span id="pwd1Span"></span></p>
+    
+    <label for="pwd2">確認密碼:</label>
+    <input type="password" name="pwd2" id="pwd2" onkeyup="checkpassword1()" size="10">
+    <p><span id="tishi"></span></p>
+    
+    <label for="mobile">手機:</label>
+    <input type="text" name="mobile" id="mobile" size="10"><p>
+    
+    <label for="email">Email:</label>
+    <input type="text" name="email" id="email" size="10"><p>
+    
+    <label for="addr">住址:</label>
+    <input type="text" name="addr" id="addr" size="10"><p>
+    
+    <label for="gender">性別:</label>
+    <input type="radio" name="gender" id="sex1" value="M">男
+    <input type="radio" name="gender" id="sex2" value="F">女
+    <p>
+    
+    <input type="submit" name="sub" id="submit" value="註冊" disabled>
+    <p>
+</form>
+</body>
+</html>
